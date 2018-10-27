@@ -34,9 +34,10 @@
       let slider = document.getElementById('slider'),
           namesList = ['airmax-jump.png', 'airmax-on-foot.png', 'airmax-playground.png', 'airmax-top-view.png', 'airmax.png'],
           n = 0;
+      slider.src = "i/" + namesList[n];
       setInterval(function() {
-        slider.src = "i/" + namesList[n];
         n++;
+        slider.src = "i/" + namesList[n];
         if (n > 4) n = 0;
       }, 5000);
 
