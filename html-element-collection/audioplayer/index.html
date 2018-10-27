@@ -38,5 +38,51 @@
   		</div>
   	</div>
   </div>
+  <script type="text/javascript">
+    const buttons = document.getElementsByClassName('buttons'),
+          player = document.getElementsByClassName('mediaplayer'),
+          songNames = ['LA Chill Tour.mp3', 'LA Fusion Jam.mp3', 'This is it band.mp3'];
+    let index = 0;
+
+    stopSong = function() {
+      player[0].classList.remove('play');
+      player[0].getElementsByTagName('audio')[0].pause();
+      player[0].getElementsByTagName('audio')[0].currentTime = 0.0;
+    }
+
+    changeSong = function(index) {
+      stopSong();
+      player[0].getElementsByTagName('audio')[0].src = './mp3/' + songNames[index];
+      player[0].getElementsByClassName('title')[0].title = songNames[index].split('.')[0];
+    }
+
+    buttons[0].getElementsByClassName('playstate')[0].onclick = function() {
+      if (player[0].classList.contains('play')) {
+        player[0].classList.toggle('play');
+        player[0].getElementsByTagName('audio')[0].pause();
+      } 
+      else {
+        player[0].classList.toggle('play');
+        player[0].getElementsByTagName('audio')[0].play();
+      }
+    }
+
+    buttons[0].getElementsByClassName('stop')[0].onclick = stopSong;    
+    buttons[0].getElementsByClassName('back')[0].onclick = function() {
+      index--;
+      if (index < 0) {index = songNames.length - 1};
+      changeSong(index);
+    }
+    buttons[0].getElementsByClassName('next')[0].onclick = function() {
+      index++;
+      if (index > songNames.length - 1) {index = 0};
+      changeSong(index);
+    }
+
+    player[0].getElementsByTagName('audio')[0].onended = function() {
+      player[0].classList.toggle('play');
+    }
+    
+  </script>
 </body>
 </html>
