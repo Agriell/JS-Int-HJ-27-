@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<title>Тестовая страница</title>
+</head>
+<body>
+	<div class="done">
+		<h2> Сделано:</h2>
+		<label>
+			<input type="checkbox" name="first" checked>
+			первый
+		</label>
+		<label>
+			<input type="checkbox" name="second" checked>
+			второй
+		</label>
+	</div>
+	<div class="undone">
+		<h2> Не сделано:</h2>
+		<label>
+			<input type="checkbox" name="third">
+			третий
+		</label>
+		<label>
+			<input type="checkbox" name="forth">
+			четвертый
+		</label>
+	</div>
+	<script type="text/javascript">
+		const 	checkbox = document.getElementsByTagName('input'),
+				done = document.getElementsByClassName('done')[0],
+				undone = document.getElementsByClassName('undone')[0];
+		
+		function checking(event) {
+			if (event.currentTarget.checked) {
+				if (event.currentTarget.parentElement != done) {
+					done.appendChild(event.currentTarget.parentElement)
+				}
+			} else {
+				if (event.currentTarget.parentElement != undone) {
+					undone.appendChild(event.currentTarget.parentElement)
+			}};
+		}
+
+		Array.from(checkbox).forEach((item) => (item.addEventListener('change', checking)));
+
+	</script>
+</body>
+</html>
