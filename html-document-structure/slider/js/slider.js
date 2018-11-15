@@ -25,15 +25,24 @@ function handlerStates(currentSlide, activeSlide) {
 		else {first.classList.remove('disabled')};
 }
 
-function slidesMover(isForward) {
-	let currentSlide = Array.from(slides.children).find((el) => (el.classList.contains('slide-current')));
-	let activeSlide = isForward ? currentSlide.nextElementSibling : currentSlide.previousElementSibling
-	handlerStates(currentSlide, activeSlide);
-}
+function slidesMover(direct) {
+	let currentSlide = Array.from(slides.children).find((el) => (el.classList.contains('slide-current'))),
+		activeSlides;
 
-function extrimSlidesMover(isLast) {
-	let currentSlide = Array.from(slides.children).find((el) => (el.classList.contains('slide-current')));
-	let activeSlide = isLast ? slides.lastElementChild : slides.firstElementChild;
+	switch(direct) {
+		case 'next':
+		activeSlide = currentSlide.nextElementSibling;
+		break;
+		case 'prev':
+		activeSlide = currentSlide.previousElementSibling;
+		break;
+		case 'last':
+		activeSlide = slides.lastElementChild;
+		break;
+		case 'first':
+		activeSlide = slides.firstElementChild;
+		break;
+	};
 	handlerStates(currentSlide, activeSlide);
 }
 
@@ -41,10 +50,10 @@ function start() {
 	slides.children[0].classList.add('slide-current');
 	handlerStates(slides.children[0]);
 
-	next.addEventListener('click', event => slidesMover(true));
-	prev.addEventListener('click', event => slidesMover());
-	last.addEventListener('click', event => extrimSlidesMover(true));
-	first.addEventListener('click', event => extrimSlidesMover());
+	next.addEventListener('click', event => slidesMover('next'));
+	prev.addEventListener('click', event => slidesMover('prev'));
+	last.addEventListener('click', event => slidesMover('last'));
+	first.addEventListener('click', event => slidesMover('first'));
 }
 
 start();
