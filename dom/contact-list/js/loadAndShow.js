@@ -1,7 +1,7 @@
-var contacts = JSON.parse(loadContacts()),
-	contactList = document.getElementsByClassName('contacts-list')[0];
+const contacts = JSON.parse(loadContacts()),
+	  contactList = document.getElementsByClassName('contacts-list')[0];
 
-createContactForm = function (card) {
+function createContactForm(card) {
 	let newLi = document.createElement('li'),
 		name =  document.createElement('strong');
 

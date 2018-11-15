@@ -2,14 +2,11 @@ const addButtons = document.getElementsByTagName('button'),
 	  cartCount = document.getElementById('cart-count'),
 	  cartPrice = document.getElementById('cart-total-price');
 var cartCountVal = 0,
-	cartPriceVal = 0,
-	k; 
+	cartPriceVal = 0; 
 
-addToBasket = function(event) {
-	if (event.shiftKey) {k = -1}
-	else {k = 1};
-	cartPriceVal += Number(event.currentTarget.dataset.price) * k;
-	cartCountVal += 1 * k;
+function addToBasket(event) {
+	cartPriceVal += Number(event.currentTarget.dataset.price);
+	cartCountVal += 1;
 	cartCount.innerHTML = cartCountVal;
 	cartPrice.innerHTML = getPriceFormatted(cartPriceVal);
 }
