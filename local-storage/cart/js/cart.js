@@ -101,16 +101,17 @@ const 	quickCart = document.getElementById('quick-cart');
 let		emptyCart = 'open',
 		summPrice = 0; // здесь надо поменять на запись в куки или локалсторэйдж
 
-function addToCart() {
-	if (quickCart.length) {
+function addToCart(event = null) {
+	if (event) {event.target.preventdefault()};
+
+	if (currentCart.length) {
 		emptyCart = null
 	} else {
 		emptyCart = 'open'
 	};
 	
-	for (let item of quickCart) {
-		quickCart.innerHTML += 
-		'<div class="quick-cart-product quick-cart-product-static" id="quick-cart-product-' + item.id + '" style="opacity: 1;">' +
+	for (let item of currentCart) {
+		quickCart.innerHTML += '<div class="quick-cart-product quick-cart-product-static" id="quick-cart-product-' + item.id + '" style="opacity: 1;">' +
 	  		'<div class="quick-cart-product-wrap">' +
 	    		'<img src="' + item.pic + '" title="' + item.title + '">' +
 	    		'<span class="s1" style="background-color: #000; opacity: .5">$800.00</span>' +
@@ -122,8 +123,7 @@ function addToCart() {
 		summPrice += item.price;
 	};
 
-	quickCart.innerHTML += 
-	'<a id="quick-cart-pay" quickbeam="cart-pay" class="cart-ico ' + emptyCart + '">'
+	quickCart.innerHTML += '<a id="quick-cart-pay" quickbeam="cart-pay" class="cart-ico ' + emptyCart + '">'
 		'<span>'
     		'<strong class="quick-cart-text">Оформить заказ<br></strong>'
     		'<span id="quick-cart-price">$' + summPrice + '.00</span>'
@@ -132,18 +132,43 @@ function addToCart() {
 
 }
 
-Object
-id: "2721888517"
-pic: "https://neto-api.herokuapp.com/hj/3.3/cart/product_1024x1024.png"
-price: 800
-productId: "2721888517"
-quantity: 5
-title: "Tony Hunfinger T-Shirt New York"
+addToCart();
+
+document.getElementById('AddToCart').addEventListener('click', addToCart);
 
 
-// Для получения списка доступных цветов запросите JSON по адресу https://neto-api.herokuapp.com/cart/colors. Вам будут доступны следующие данные по каждому цвету:
 
-// title — описание цвета;
-// type — значение цвета, для сохранения в корзине;
-// code — код цвета, для отображения фона;
-// isAvailable — доступность товара в данном цвете.
+
+
+
+
+// Object
+// id: "2721888517"
+// pic: "https://neto-api.herokuapp.com/hj/3.3/cart/product_1024x1024.png"
+// price: 800
+// productId: "2721888517"
+// quantity: 5
+// title: "Tony Hunfinger T-Shirt New York"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
