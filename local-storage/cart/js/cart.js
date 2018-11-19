@@ -1,6 +1,7 @@
 'use strict';
 
 // Запрашиваем варианты доступных цветов и размеров товара и состояние корзины
+
 function doRequest(htmlAdrr) {
 	const xhr = new XMLHttpRequest();
 	xhr.open('GET', htmlAdrr, false);
@@ -10,7 +11,7 @@ function doRequest(htmlAdrr) {
 	});
 	xhr.addEventListener('error', (err) => {console.log(err)});
 	xhr.send();
-}
+};
 
 function responseHandler(response, marker) {
 	if (marker == 'colors') {
@@ -18,9 +19,10 @@ function responseHandler(response, marker) {
 	} else if (marker == 'sizes') {
 		sizeData = response;
 	} else if (marker == 'cart') {
+		// console.log(response);
 		currentCart = response;
 	}
-}
+};
 
 let 	colorsData = {},
 		sizeData = {},
@@ -93,13 +95,51 @@ for (let size of sizeData) {
 							'</div>';
 }
 
-const si = [
-	{title: "S", type: "s", isAvailable: false},
-	{title: "M", type: "m", isAvailable: true},
-	{title: "L", type: "l", isAvailable: true},
-	{title: "XL", type: "xl", isAvailable: true},
-	{title: "XXL", type: "xxl", isAvailable: false}
- ];
+// Заполняем корзину
+
+const 	quickCart = document.getElementById('quick-cart');
+let		emptyCart = 'open',
+		summPrice = 0; // здесь надо поменять на запись в куки или локалсторэйдж
+
+function addToCart() {
+	if (quickCart.length) {
+		emptyCart = null
+	} else {
+		emptyCart = 'open'
+	};
+	
+	for (let item of quickCart) {
+		quickCart.innerHTML += 
+		'<div class="quick-cart-product quick-cart-product-static" id="quick-cart-product-' + item.id + '" style="opacity: 1;">' +
+	  		'<div class="quick-cart-product-wrap">' +
+	    		'<img src="' + item.pic + '" title="' + item.title + '">' +
+	    		'<span class="s1" style="background-color: #000; opacity: .5">$800.00</span>' +
+	    		'<span class="s2"></span>' +
+	  		'</div>' +
+	  		'<span class="count hide fadeUp" id="quick-cart-product-count-' + item.id + '">' + item.quantity + '</span>' +
+	  		'<span class="quick-cart-product-remove remove" data-id="' + item.id + '"></span>' +
+		'</div>';
+		summPrice += item.price;
+	};
+
+	quickCart.innerHTML += 
+	'<a id="quick-cart-pay" quickbeam="cart-pay" class="cart-ico ' + emptyCart + '">'
+		'<span>'
+    		'<strong class="quick-cart-text">Оформить заказ<br></strong>'
+    		'<span id="quick-cart-price">$' + summPrice + '.00</span>'
+		'</span>'
+	'</a>'
+
+}
+
+Object
+id: "2721888517"
+pic: "https://neto-api.herokuapp.com/hj/3.3/cart/product_1024x1024.png"
+price: 800
+productId: "2721888517"
+quantity: 5
+title: "Tony Hunfinger T-Shirt New York"
+
 
 // Для получения списка доступных цветов запросите JSON по адресу https://neto-api.herokuapp.com/cart/colors. Вам будут доступны следующие данные по каждому цвету:
 
