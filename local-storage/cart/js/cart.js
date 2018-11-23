@@ -226,6 +226,7 @@ function removeCurrentItem(event) {
         currentCart = serverRequest;
         createCart();
     }
+	removeProduct.addEventListener('click', removeCurrentItem);    
 }
 
 addToCartForm.addEventListener('submit', saveCurrentItem);
