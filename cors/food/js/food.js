@@ -88,8 +88,21 @@ function profileFilling() {
 	consumers.innerHTML += `<span>(+${userList.total})</span>`;
 }
 
+// function start() {
+// 	return new Promise((done, error) => {
+// 		loadDataRecipe();
+// 		loadRecipeRating();
+// 		loadUserList();
+// 		// done()
+// 	})
+// }
+
+// start().then((done) => {profileFilling()})
+
+
 loadDataRecipe();
 loadRecipeRating();
 loadUserList();
+
 
 window.addEventListener('load', profileFilling);
