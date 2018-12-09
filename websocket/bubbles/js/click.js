@@ -3,7 +3,8 @@
 const connection = new WebSocket('wss://neto-api.herokuapp.com/mouse');
 
 window.addEventListener('click', (event) => {
-	let mess = {'x': event.screenX, 'y': event.screenY};
+	// console.log(event)
+	let mess = {'x': event.offsetX, 'y': event.offsetY};
 	connection.send(JSON.stringify(mess));
 })
 
