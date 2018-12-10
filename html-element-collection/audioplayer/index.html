@@ -51,9 +51,12 @@
     }
 
     changeSong = function(index) {
-      stopSong();
+      // stopSong();
       player[0].getElementsByTagName('audio')[0].src = './mp3/' + songNames[index];
       player[0].getElementsByClassName('title')[0].title = songNames[index].split('.')[0];
+      if (player[0].classList.contains('play')) {
+        player[0].getElementsByTagName('audio')[0].play();
+      }
     }
 
     buttons[0].getElementsByClassName('playstate')[0].onclick = function() {

@@ -38,8 +38,10 @@
     const buttons = document.getElementsByClassName('drum-kit__drum');
 
     for (let button of buttons) {
-      button.onclick = function() {
-        this.getElementsByTagName('audio')[0].play();
+      button.onclick = function(ev) {
+        let sound = new Audio(this.getElementsByTagName('audio')[0].src)
+        sound.play()
+        
       }
     }
   </script>
