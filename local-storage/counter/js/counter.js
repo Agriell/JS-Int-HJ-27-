@@ -38,9 +38,11 @@ function countHandler(arg) {
 	if (counterValue < 0) {
 		counterValue = 0
 	} else {
-		counter.innerText = counterValue;
-		document.cookie = 'countVal=' + counterValue;
-	};
+		let date = new Date;
+		date.setDate(date.getDate() + 1);
+			document.cookie = 'countVal=' + counterValue + '; expires=' + date.toUTCString();
+			counter.innerText = counterValue;   
+		};
 };
 
 incrementButton.addEventListener('click', event => countHandler('+'));

@@ -1,12 +1,13 @@
 const slider = document.getElementsByClassName('slider')[0],
 	  sliderNav = document.getElementsByClassName('slider-nav')[0],
 	  slides = document.getElementsByClassName('slides')[0];
-	  
+let prev, next, last, first;
+
 for (nav of Array.from(sliderNav.children)) {
-	if (nav.dataset.action == 'prev') {var prev = nav}
-	if (nav.dataset.action == 'next') {var next = nav}
-	if (nav.dataset.action == 'last') {var last = nav}
-	if (nav.dataset.action == 'first') {var first = nav}
+	if (nav.dataset.action == 'prev') {prev = nav}
+	if (nav.dataset.action == 'next') {next = nav}
+	if (nav.dataset.action == 'last') {last = nav}
+	if (nav.dataset.action == 'first') {first = nav}
 };
 
 function handlerStates(currentSlide, activeSlide) {
@@ -23,13 +24,13 @@ function handlerStates(currentSlide, activeSlide) {
 		else {prev.classList.remove('disabled')};
 	if (!activeSlide.previousElementSibling) {first.classList.add('disabled')}
 		else {first.classList.remove('disabled')};
-}
+};
 
-function slidesMover(direct) {
-	let currentSlide = Array.from(slides.children).find((el) => (el.classList.contains('slide-current'))),
+function slidesMover(event) {
+	let currentSlide = document.querySelector('.slide-current'),
 		activeSlides;
 
-	switch(direct) {
+	switch(event.target.dataset.action) {
 		case 'next':
 		activeSlide = currentSlide.nextElementSibling;
 		break;
@@ -44,16 +45,12 @@ function slidesMover(direct) {
 		break;
 	};
 	handlerStates(currentSlide, activeSlide);
-}
+};
 
 function start() {
 	slides.children[0].classList.add('slide-current');
 	handlerStates(slides.children[0]);
-
-	next.addEventListener('click', event => slidesMover('next'));
-	prev.addEventListener('click', event => slidesMover('prev'));
-	last.addEventListener('click', event => slidesMover('last'));
-	first.addEventListener('click', event => slidesMover('first'));
-}
+	document.querySelector('.slider-nav').addEventListener('click', slidesMover);
+};
 
 start();
