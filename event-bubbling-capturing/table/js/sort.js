@@ -1,17 +1,14 @@
 'use strict';
 
-const	propNames = document.getElementsByTagName('th'),
-		tab = document.getElementsByTagName('table')[0];
+const propNames = document.getElementsByTagName('th')
+const tab = document.querySelector('table');
+
+tab.addEventListener('click', handleTableClick);
 
 function handleTableClick(event) {
 	event.stopPropagation();
 	let { target: item } = event;
-
-	item.dataset.dir ? item.dataset.dir *= -1 : item.setAttribute('data-dir', 1);
-	tab.setAttribute('data-sort-by', item.dataset.propName);
+	item.dataset.dir ? item.dataset.dir *= -1 : item.dataset.dir= 1;
+	tab.dataset.sortBy = item.dataset.propName;
 	sortTable(tab.dataset.sortBy, item.dataset.dir);
-}
-
-Array.from(propNames).forEach((item) => {
-	item.addEventListener('click', handleTableClick)
-})
+};
