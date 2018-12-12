@@ -6,6 +6,8 @@ const 	addTCart = document.getElementsByClassName('add-to-cart'),
 document.querySelector('.items-list').addEventListener('click', addToCartCrutch)
 
 function addToCartCrutch(event) {
-	let {dataset: item} = event.target;
-	addToCart(item);
+	if (event.target.classList.contains('add-to-cart')) {
+		let {dataset: item} = event.target;
+		addToCart(item);
+	};
 };
