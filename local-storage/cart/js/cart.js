@@ -142,11 +142,11 @@ function createCart(event = null) {
 		emptyCart = 'open'
 	};
 		
-	if (quickCart.children.length > 0) {
-		while (quickCart.children.length > 0) {
-			quickCart.lastElementChild.remove();
-		}
-	};
+	// if (quickCart.children.length > 0) {
+	// 	while (quickCart.children.length > 0) {
+	// 		quickCart.lastElementChild.remove();
+	// 	}
+	// };
 
 	for (let item of currentCart) {
 		summPrice = item.price * item.quantity;
@@ -156,7 +156,9 @@ function createCart(event = null) {
 		'" title="' + item.title + '">' + '<span class="s1" style="background-color: #000; opacity: .5">$' + summPrice + '</span>' +
 	    '<span class="s2"></span>' + '</div>' +	'<span class="count hide fadeUp" id="quick-cart-product-count-' + 
 	    item.id + '">' + item.quantity + '</span>' + '<span class="quick-cart-product-remove remove" data-id="' + 
-	    item.id + '"></span>' + '</div>';
+		item.id + '"></span>' + '</div>';
+		
+		document.getElementsByClassName('remove')[0].addEventListener('click', removeCurrentItem);
 
 	};
 
@@ -177,7 +179,7 @@ createCart();
 
 const addToCartForm = document.getElementById('AddToCartForm');
 const checkedItems = document.getElementsByClassName('swatch-element');
-const removeProduct = document.getElementsByClassName('quick-cart-product-remove')[0];
+let removeProduct = document.getElementsByClassName('quick-cart-product-remove')[0];
 
 function saveCurrentItem(event) {
 	event.preventDefault()
@@ -225,10 +227,10 @@ function removeCurrentItem(event) {
         const serverRequest = JSON.parse(xhr.responseText);
         currentCart = serverRequest;
         createCart();
-    }
-	removeProduct.addEventListener('click', removeCurrentItem);    
+	}
+	document.getElementsByClassName('quick-cart-product-remove')[0].addEventListener('click', removeCurrentItem);    
 }
 
 addToCartForm.addEventListener('submit', saveCurrentItem);
-removeProduct.addEventListener('click', removeCurrentItem);
+document.getElementsByClassName('quick-cart-product-remove')[0].addEventListener('click', removeCurrentItem);
 
