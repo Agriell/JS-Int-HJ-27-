@@ -1,5 +1,7 @@
 const tabs = document.getElementsByTagName('a'),
-	  content = document.getElementById('content');
+	  content = document.getElementById('content'),
+	  preloader = document.getElementById('preloader');
+let activeTab = document.getElementsByClassName('active')[0];
 
 function tabSelect(event) {
 	event.preventDefault();
@@ -7,22 +9,27 @@ function tabSelect(event) {
 		tab.classList.remove('active');	
 	};
 	event.currentTarget.classList.add('active');
+	fillTab(event.currentTarget)
 
 }
 
 function fillTab(tab) {
 	let xhr = new XMLHttpRequest();
-	console.log(tab.href)
 	xhr.open('GET', tab.href, true);
+	xhr.addEventListener('loadstart', () => {
+		preloader.classList.remove('hidden')
+	});
+	xhr.addEventListener('loadend', () => {
+		preloader.classList.add('hidden')
+	});
+	xhr.addEventListener('load', (resp) => {
+		content.innerHTML = resp.srcElement.responseText
+	})
 	xhr.send();
-	console.log(xhr.responseText)
 }
-
 
 for (let tab of tabs) {
 	tab.addEventListener('click', tabSelect);	
 }
-
-const activeTab = document.getElementsByClassName('active')[0];
 
 fillTab(activeTab);
