@@ -21,29 +21,38 @@ function toMoveEye(x, y, size) {
 	pupil.style.setProperty('--pupil-size', size);	
 }
 
+// версия 4 - полярные координаты
+
 function calculateParam(cursorX, cursorY) {
-	let factorX = totalWidth / pupilXFact;
-	let factorY = totalHeight / pupilYFact;
-	let pupilX = Math.round(1000 * (cursorX	- pupilXFact) / totalWidth / 30 * factorX);
-	let pupilY = Math.round(1000 * (cursorY - pupilYFact) / totalHeight / 30 * factorY);
-	
-	if (pupilX > 30) pupilX = 30;
-	if (pupilX < -30) pupilX = -30;
-	if (pupilY > 30 + pupilCoord.width) pupilY = 30 + pupilCoord.width;
-	if (pupilY < -30 + pupilCoord.width) pupilY = -30 + pupilCoord.width;
-
-	let xMax = Math.max((totalWidth - pupilXFact), pupilXFact);
-	let yMax = Math.max((totalHeight - pupilYFact), pupilYFact);
-	let maxDist = Math.sqrt(xMax * xMax + yMax * yMax) / 3;
-
-	let eyeDist = Math.sqrt((cursorX - pupilXFact) * (cursorX - pupilXFact) + (cursorY - pupilYFact) *(cursorY - pupilYFact));
-
-	let size = 4 - eyeDist / maxDist;
-
+	let eyeX, eyeY, pupilX, pupilY, size, fi, radius, maxRadius;
+	// определяем координаты центра глаза
+	eyeX = eyeCoord.x + eyeCoord.width / 2;
+	eyeY = eyeCoord.y + eyeCoord.width / 4;
+	// парамаетры в радиальной сист коорд
+	maxRadius = Math.max(eyeX, eyeY, totalWidth - eyeX, totalHeight - eyeY);
+	fi = Math.atan((cursorY - eyeY) / (cursorX - eyeX));
+	radius = Math.sqrt((cursorX - eyeX) * (cursorX - eyeX) + (cursorY - eyeY) * (cursorY - eyeY));
+	let eyeRadInt = 25 * radius / maxRadius;
+	// параметры зрачка
+	if (cursorX <= eyeX) {
+		pupilX = - eyeRadInt * Math.cos(fi);
+		if (cursorY <= eyeY) {
+			pupilY = - eyeRadInt * Math.sin(fi);
+		} else {
+			pupilY = - eyeRadInt * Math.sin(fi);
+		}
+	} else {
+		pupilX = eyeRadInt * Math.cos(fi)
+		if (cursorY <= eyeY) {
+			pupilY = eyeRadInt * Math.sin(fi);
+		} else {
+			pupilY = eyeRadInt * Math.sin(fi);
+		}
+	}
+	size = 3 - 3 * radius / maxRadius;
 	if (size < 1) size = 1;
-	if (size > 3) size = 3;
-
-	toMoveEye(pupilX, pupilY, size);
+	
+	toMoveEye(pupilX, pupilY + eyeCoord.width / 4 - pupilCoord.width/2, size);
 }
 
 document.addEventListener('mousemove', (event) => {

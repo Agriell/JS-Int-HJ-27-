@@ -142,21 +142,31 @@ function createCart(event = null) {
 		emptyCart = 'open'
 	};
 		
-	// if (quickCart.children.length > 0) {
-	// 	while (quickCart.children.length > 0) {
-	// 		quickCart.lastElementChild.remove();
-	// 	}
-	// };
+	if (quickCart.children.length > 0) {
+		while (quickCart.children.length > 0) {
+			quickCart.lastElementChild.remove();
+		}
+	};
 
 	for (let item of currentCart) {
 		summPrice = item.price * item.quantity;
 
-		quickCart.innerHTML += '<div class="quick-cart-product quick-cart-product-static" id="quick-cart-product-' + 
-		item.id + '" style="opacity: 1;">' + '<div class="quick-cart-product-wrap">' + '<img src="' + item.pic + 
-		'" title="' + item.title + '">' + '<span class="s1" style="background-color: #000; opacity: .5">$' + summPrice + '</span>' +
-	    '<span class="s2"></span>' + '</div>' +	'<span class="count hide fadeUp" id="quick-cart-product-count-' + 
-	    item.id + '">' + item.quantity + '</span>' + '<span class="quick-cart-product-remove remove" data-id="' + 
-		item.id + '"></span>' + '</div>';
+		quickCart.innerHTML += 
+		`<div class="quick-cart-product quick-cart-product-static" 
+			id="quick-cart-product-${item.id}" style="opacity: 1;">
+			<div class="quick-cart-product-wrap">
+				<img src="${item.pic}" title="${item.title}">
+				<span class="s1" style="background-color: #000; opacity: .5">
+					$${summPrice}
+				</span>
+				<span class="s2"></span>
+			</div>
+			<span class="count hide fadeUp" id="quick-cart-product-count-${item.id}">
+				${item.quantity}
+			</span>
+			<span class="quick-cart-product-remove remove" data-id="${item.id}">
+			</span>
+		</div>`;
 		
 		document.getElementsByClassName('remove')[0].addEventListener('click', removeCurrentItem);
 
@@ -228,9 +238,9 @@ function removeCurrentItem(event) {
         currentCart = serverRequest;
         createCart();
 	}
-	document.getElementsByClassName('quick-cart-product-remove')[0].addEventListener('click', removeCurrentItem);    
+	document.getElementsByClassName('remove')[0].addEventListener('click', removeCurrentItem);    
 }
 
 addToCartForm.addEventListener('submit', saveCurrentItem);
-document.getElementsByClassName('quick-cart-product-remove')[0].addEventListener('click', removeCurrentItem);
+document.getElementsByClassName('remove')[0].addEventListener('click', removeCurrentItem);
 

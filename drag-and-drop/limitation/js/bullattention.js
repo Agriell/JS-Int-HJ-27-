@@ -3,6 +3,11 @@ const message = document.getElementsByClassName('message')[0];
 const text = document.getElementsByClassName('textarea')[0];
 let timerId;
 
+text.addEventListener('focus', (event) => {
+	clearTimeout(timerId);
+	bull.classList.add('active');
+});
+
 text.addEventListener('input', (event) => {
 	clearTimeout(timerId);
 	message.classList.remove('view');

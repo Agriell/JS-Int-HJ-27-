@@ -22,26 +22,22 @@ function drawRightEye(coord) {
 }
 
 function calcCoord(cursor, eye) {
-	function factorX() {
-		if (cursor.x > eye.x + eye.width) {
-			return (totalWidth - eye.x + eye.width) / 20
-		} else {
-			return eye.x / 20;
-		}
+	let x, y;
+	if (cursor.x <= eye.x) {
+		x = 25 - (eye.x - cursor.x);
+		if (x < 0 + eye.width / 2) x = 0 + eye.width / 2;
+	} else {
+		x = 25 + (cursor.x - eye.x)
+		if (x > 51 - eye.width / 4) x = 51 - eye.width / 4;
 	};
-
-	function factorY() {
-		if (cursor.y > eye.y + eye.height) {
-			return (totalHeight - eye.y + eye.height) / 20
-		} else {
-			return eye.y / 20;
-		}
+	if (cursor.y <= eye.y) {
+		y = 25 - (eye.y - cursor.y);
+		if (y < 0 + eye.height / 2) y = 0 + eye.height / 2;
+	} else {
+		y = 25 + (cursor.y - eye.y)
+		if (y > 51 - eye.height / 4) y = 51 - eye.height / 4;
 	};
-
-	let x = 25 + (cursor.x - eye.x) / factorX();
-	let y = 25 + (cursor.y - eye.y) / factorY();
-
-	return {x, y}
+	return {'x': x, 'y': y}
 }
 
 function drawEyes(event) {
@@ -64,5 +60,5 @@ function trottle(callback, delay) {
 };
 
 document.addEventListener('mousemove', 
-	(event) => trottle(drawEyes(event), 1)
+	(event) => trottle(drawEyes(event), 16)
 );

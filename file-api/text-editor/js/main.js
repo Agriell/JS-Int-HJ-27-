@@ -20,15 +20,20 @@ class TextEditor {
     this.contentContainer.addEventListener( 'input', save );
   }
   loadFile( e ) {
+                
   }
   readFile( file ) {
+
   }
   setFilename( filename ) {
     this.filenameContainer.textContent = filename;
   }
   showHint( e ) {
+    preventDefault();
+    e.hintContainer.classList.add('text-editor__hint_visible');
   }
   hideHint() {
+    this.hintContainer.classList.remove('text-editor__hint_visible');
   }
   load( value ) {
     this.contentContainer.value = value || '';
@@ -39,6 +44,12 @@ class TextEditor {
   save() {
     localStorage[ this.storageKey ] = this.contentContainer.value;
   }
+
+  // contentContainer.addEventListener( 'dragover', showHint );
+  
+
 }
 
 new TextEditor( document.getElementById( 'editor' ));
+
+document.getElementById( 'editor' ).addEventListener('dragover', showHint)
